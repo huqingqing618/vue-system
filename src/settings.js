@@ -31,6 +31,7 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
+  whiteList: ["/login", "/auth-redirect"], // no redirect whitelist
   errorLog: "production",
   proxyUrl: "http://10.132.19.62:8888/sqsd_srm",
   menuBg: "#1f2d3d",

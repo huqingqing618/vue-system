@@ -176,6 +176,9 @@ export default {
         await this.$refs.loginForm.validate
         this.loading = true
         await this.login(this.loginForm)
+        this.loading = false
+        this.$router.push({ path: this.redirect || "/", query: this.otherQuery })
+        this.$message.success("登陆成功")
       } catch (err) {
         this.loading = false
         console.log(err)
@@ -227,6 +230,9 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  width: 100%;
+  background: url("../../assets/images/loginBg.jpg") no-repeat;
+  background-size: 100% 100vh;
   .el-input {
     display: inline-block;
     height: 47px;

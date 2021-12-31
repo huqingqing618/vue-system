@@ -386,7 +386,49 @@ export const asyncRoutes = [
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }
 ]
+export const srmRoutes = [
+  // {
+  //   path: "/back-stage-manage",
+  //   name: "BackStageManage",
+  //   level: 0,
+  //   component: () => import("@/views/layout.vue"),
+  //   redirect: "/department-manage",
+  //   meta: { title: "后台管理", icon: "iconfont sqhuabankaobei-", hasRoute: "system:management" },
+  //   children: [
+  //     {
+  //       path: "/user-manage",
+  //       name: "UserManage",
+  //       meta: { title: "用户管理", hasRoute: "sys:user:management" },
+  //       component: () => import("@/views/back-stage-manage/user-manage.vue")
+  //     },
+  //     {
+  //       path: "/role-manage",
+  //       name: "RoleManage",
+  //       meta: { title: "角色管理", hasRoute: "sys:role:management" },
+  //       component: () => import("@/views/back-stage-manage/role-manage.vue")
+  //     },
+  //     {
+  //       path: "/user-authority",
+  //       name: "UserAuthority",
+  //       meta: { title: "权限管理", hasRoute: "sys:permission:management" },
+  //       component: () => import("@/views/back-stage-manage/user-authority.vue")
+  //     },
+  //     {
+  //       path: "/department-manage",
+  //       name: "DepartmentManage",
+  //       meta: { title: "部门管理", hasRoute: "sys:department:management" },
+  //       component: () => import("@/views/back-stage-manage/department-manage.vue")
+  //     },
+  //     {
+  //       path: "/log-management",
+  //       name: "LogManagement",
+  //       meta: { title: "日志管理", hasRoute: "sys:log:manager" },
+  //       component: () => import("@/views/back-stage-manage/log-management.vue")
+  //     }
+  //   ]
+  // }
 
+]
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
