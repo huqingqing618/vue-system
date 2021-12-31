@@ -49,8 +49,8 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
+          <span>Username : sap01</span>
+          <span>Password : Aa123456</span>
         </div>
         <div class="tips">
           <span style="margin-right:18px;">Username : editor</span>
@@ -76,6 +76,7 @@
 <script>
 import { validUsername } from "@/utils/validate"
 import SocialSign from "./components/SocialSignin"
+import { mapActions } from "vuex"
 
 export default {
   name: "Login",
@@ -97,8 +98,8 @@ export default {
     }
     return {
       loginForm: {
-        username: "admin",
-        password: "111111"
+        username: "sap01",
+        password: "Aa123456"
       },
       loginRules: {
         username: [{ required: true, trigger: "blur", validator: validateUsername }],
@@ -126,6 +127,7 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
+    console.log(this.$store)
   },
   mounted() {
     if (this.loginForm.username === "") {
@@ -138,6 +140,7 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    ...mapActions("user", ["login"]),
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= "A" && key <= "Z")
@@ -152,23 +155,31 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/", query: this.otherQuery })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log("error submit!!")
-          return false
-        }
-      })
+    async handleLogin() {
+      // this.$refs.loginForm.validate(valid => {
+      //   if (valid) {
+      //     this.loading = true
+      //     this.$store.dispatch("user/login", this.loginForm)
+      //       .then(() => {
+      //         this.$router.push({ path: this.redirect || "/", query: this.otherQuery })
+      //         this.loading = false
+      //       })
+      //       .catch(() => {
+      //         this.loading = false
+      //       })
+      //   } else {
+      //     console.log("error submit!!")
+      //     return false
+      //   }
+      // })
+      try {
+        await this.$refs.loginForm.validate
+        this.loading = true
+        await this.login(this.loginForm)
+      } catch (err) {
+        this.loading = false
+        console.log(err)
+      }
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
