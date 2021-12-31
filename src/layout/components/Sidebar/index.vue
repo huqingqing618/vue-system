@@ -5,10 +5,10 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
+        :background-color="$store.state.settings.menuBg"
+        :text-color="settings.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
+        :active-text-color="settings.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -19,18 +19,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
-
+import { mapGetters } from "vuex"
+import Logo from "./Logo"
+import SidebarItem from "./SidebarItem"
+// import variables from "@/styles/variables.scss"
+const settings = require("@/settings.js")
+const { menuBg } = settings
 export default {
   components: { SidebarItem, Logo },
   computed: {
     ...mapGetters([
-      'permission_routes',
-      'sidebar'
+      "permission_routes",
+      "sidebar"
     ]),
+    // ...mapState(["settings"]),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -43,8 +45,19 @@ export default {
     showLogo() {
       return this.$store.state.settings.sidebarLogo
     },
-    variables() {
-      return variables
+    // variables() {
+    //   return variables
+    // },
+    settings: {
+      get() {
+        return settings
+      },
+      set(val) {
+        console.log(val)
+      }
+    },
+    menuBg() {
+      return menuBg
     },
     isCollapse() {
       return !this.sidebar.opened

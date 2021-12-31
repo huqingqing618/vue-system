@@ -1,7 +1,7 @@
 "use strict"
 const path = require("path")
 const defaultSettings = require("./src/settings.js")
-
+console.log(defaultSettings)
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -36,7 +36,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require("./mock/mock-server.js")
+    // before: require("./mock/mock-server.js")
+    proxy: {
+      "/api": {
+        target: defaultSettings.proxyUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          "/api": ""
+        }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

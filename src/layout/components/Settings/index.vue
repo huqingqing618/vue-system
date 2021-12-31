@@ -9,6 +9,11 @@
       </div>
 
       <div class="drawer-item">
+        <span>setting menu</span>
+        <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChangeBg" />
+      </div>
+
+      <div class="drawer-item">
         <span>Open Tags-View</span>
         <el-switch v-model="tagsView" class="drawer-switch" />
       </div>
@@ -22,13 +27,12 @@
         <span>Sidebar Logo</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import ThemePicker from '@/components/ThemePicker'
+import ThemePicker from "@/components/ThemePicker"
 
 export default {
   components: { ThemePicker },
@@ -41,8 +45,8 @@ export default {
         return this.$store.state.settings.fixedHeader
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'fixedHeader',
+        this.$store.dispatch("settings/changeSetting", {
+          key: "fixedHeader",
           value: val
         })
       }
@@ -52,8 +56,8 @@ export default {
         return this.$store.state.settings.tagsView
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'tagsView',
+        this.$store.dispatch("settings/changeSetting", {
+          key: "tagsView",
           value: val
         })
       }
@@ -63,8 +67,8 @@ export default {
         return this.$store.state.settings.sidebarLogo
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'sidebarLogo',
+        this.$store.dispatch("settings/changeSetting", {
+          key: "sidebarLogo",
           value: val
         })
       }
@@ -72,8 +76,14 @@ export default {
   },
   methods: {
     themeChange(val) {
-      this.$store.dispatch('settings/changeSetting', {
-        key: 'theme',
+      this.$store.dispatch("settings/changeSetting", {
+        key: "theme",
+        value: val
+      })
+    },
+    themeChangeBg(val) {
+      this.$store.dispatch("settings/changeSetting", {
+        key: "menuBg",
         value: val
       })
     }
