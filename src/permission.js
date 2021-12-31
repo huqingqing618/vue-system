@@ -29,7 +29,6 @@ router.beforeEach(async(to, from, next) => {
         console.log(accessRoutes)
         router.addRoutes(accessRoutes)
         next({ ...to, replace: true })
-
         NProgress.done()
       } else {
         next()
