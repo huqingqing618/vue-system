@@ -198,6 +198,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$tagViews:red;
+:export {
+  tagViews: $tagViews;
+}
+@import "../../../styles/element-variables";
 .tags-view-container {
   height: 48px;
   width: 100%;
@@ -225,9 +230,9 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        background-color: #42b983;
+        background-color: $tagViews;
         color: #fff;
-        border-color: #42b983;
+        border-color: $tagViews;
         &::before {
           content: '';
           background: #fff;

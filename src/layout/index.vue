@@ -99,7 +99,4 @@ export default {
   .mobile .fixed-header {
     width: 100%;
   }
-  .tabStyle{
-    // height: 110px;
-  }
 </style>
