@@ -25,7 +25,7 @@ router.beforeEach(async(to, from, next) => {
       if (!userInfo.id) {
         const user = await store.dispatch("user/getInfo")
         // 获取异步路由
-        const accessRoutes = await store.dispatch("permission/getAsyncRouter", user.permissionCodes)
+        const accessRoutes = await store.dispatch("permission/getAsyncRouter", user?.permissionCodes)
         console.log(accessRoutes)
         router.addRoutes(accessRoutes)
         next({ ...to, replace: true })

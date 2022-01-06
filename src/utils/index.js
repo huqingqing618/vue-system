@@ -355,3 +355,14 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, " ")
   }
 }
+
+/**
+ * 过滤搜索方法
+ */
+export const filterSearch = (searchList) => {
+  const obj = {}
+  searchList.forEach(item => {
+    obj[item.props] = item.value
+  })
+  return obj
+}

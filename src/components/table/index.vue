@@ -1,62 +1,70 @@
 <template>
-  <div class="table" style="header">
-    <el-form class="my-form" label-width="100px">
-      <el-row :gutter="10">
+  <div class="table">
+    <el-row :gutter="10" class="my-form">
+      <el-form label-width="120px">
         <el-col v-for="(v,i) in searchList" :key="i" :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
           <el-form-item :label="v.label">
-            <el-input v-model="v.value" />
+            <el-input v-if="!v.type" v-model="v.value" />
+            <el-select v-else-if="v.type==='select'" v-model="v.value" class="select">
+              <el-option
+                v-for="item in v.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="searchBtn">
-          <el-button type="primary" round>搜索</el-button>
-          <el-button type="success" round @click="clearSearch">清空</el-button>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col>
-          <el-table v-loading.fullscreen.lock="loading" border height="410" max-height="410" :data="list">
-            <el-table-column
-              type="index"
-              align="center"
-              label="序号"
-              fixed="left"
-              width="50"
-            />
-            <el-table-column
-              v-for="(v,i) in tableHeaderList"
-              :key="i"
-              :prop="v.value"
-              :label="v.label"
-              align="center"
-              :formatter="v.filterFn"
-            />
-            <el-table-column
-              label="操作"
-              align="center"
-              fixed="right"
-            >
-              <template v-slot="{row}">
-                <el-button v-for="(v,i) in operationList" :key="i" type="primary" size="small" round @click="`$emit('${v.emitName}',${row})`">{{ v.text }}</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-col>
-      </el-row>
-      <el-row type="flex" justify="end">
-        <el-col>
-          <el-pagination
-            :current-page="pageObj.page"
-            :page-sizes="pageObj.pageSizes"
-            :page-size="pageObj.pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pageObj.total"
-            class="pagination"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+      </el-form>
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" class="searchBtn">
+        <el-button type="primary" round @click="$emit('searchBtn')">搜索</el-button>
+        <el-button type="success" round @click="clearSearch">清空</el-button>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-table v-loading.fullscreen.lock="loading" min-height="600" border :data="asyncTableList">
+          <el-table-column
+            type="index"
+            align="center"
+            label="序号"
+            fixed="left"
+            width="50"
           />
-        </el-col>
-      </el-row>
-    </el-form>
+          <el-table-column
+            v-for="(v,i) in tableHeaderList"
+            :key="i"
+            :prop="v.value"
+            :label="v.label"
+            align="center"
+            :formatter="v.filterFn"
+          />
+          <el-table-column
+            label="操作"
+            align="center"
+            fixed="right"
+          >
+            <template v-slot="{row}">
+              <el-button v-for="(v,i) in operationList" :key="i" type="primary" size="small" round @click="`$emit('${v.emitName}',${row})`">{{ v.text }}</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
+    <el-row type="flex" justify="end">
+      <el-col>
+        <el-pagination
+          class="pagination"
+          :total="pageObj.total"
+          :current-page="pageObj.page"
+          :page-size="pageObj.pageSize"
+          :page-sizes="pageObj.pageSizes"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -155,6 +163,11 @@ export default {
       loading: true
     }
   },
+  computed: {
+    tableList() {
+      return this.asyncTableList
+    }
+  },
   created() {
     const arr = new Array(10)
     arr.fill({ ...this.asyncTableList[0] })
@@ -187,10 +200,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.my-form{
+.table{
     margin: 10px;
     padding: 20px;
-    .searchBtn{
+    min-height: calc(100vh - 120px);
+    .my-form{
+      margin-bottom: 10px;
+      .select{
+        width: 100%;
+      }
+    }
+   .searchBtn{
       text-align: center;
     }
     .pagination{
